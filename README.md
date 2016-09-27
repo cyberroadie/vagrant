@@ -1,3 +1,15 @@
+# Vagrant with experimental XHyve support
+
+[XHyve](https://github.com/mist64/xhyve) is a lightweight OS X virtualization solution
+I added the code from Kridsada Thanabulpong [vagrant-xhyve github repo](https://github.com/sirn/vagrant-xhyve) 
+and wrangled it into Vagrant and tweaked it until it worked.
+
+Needless to say: highly experimental
+
+To build:
+    rake compile
+    rake install
+
 # Vagrant
 
 * Website: [https://www.vagrantup.com/](https://www.vagrantup.com/)
