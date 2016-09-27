@@ -45,3 +45,5 @@ doc/
 .ruby-gemset
 .ruby-version
 .rvmrc
+
+tmp/
