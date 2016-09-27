@@ -12,6 +12,14 @@ DHCPD_PARSER = "#{SUPPORT_DIR}/dhcpd_leases.rb".freeze
 $stdout.sync = true
 $stderr.sync = true
 
+Rake::ExtensionTask.new('vmnet_mac') 
+
+file DHCPD_PARSER => "#{SUPPORT_DIR}/dhcpd_leases.y" do |t|
+  sh "racc -o #{t.name} #{t.prerequisites.first}"
+end
+
+# Rake::Task['compile'].prerequisites << DHCPD_PARSER
+
 # Load all the rake tasks from the "tasks" folder. This folder
 # allows us to nicely separate rake tasks into individual files
 # based on their role, which makes development and debugging easier
@@ -20,16 +28,5 @@ task_dir = File.expand_path("../tasks", __FILE__)
 Dir["#{task_dir}/**/*.rake"].each do |task_file|
   load task_file
 end
-
-Rake::ExtensionTask.new('vmnet_mac') do |ext|
-  ext.ext_dir = 'ext/vmnet_mac'
-  ext.lib_dir = SUPPORT_DIR
-end
-
-file DHCPD_PARSER => "#{SUPPORT_DIR}/dhcpd_leases.y" do |t|
-  sh "racc -o #{t.name} #{t.prerequisites.first}"
-end
-
-Rake::Task['compile'].prerequisites << DHCPD_PARSER
 
 task default: "test:unit"

@@ -63,11 +63,12 @@ module VagrantPlugins
 
         def store_mac_address!
           unless mac_address
-            lib_dir = Vagrant.source_root
+            lib_dir = Vagrant.source_root + "\lib"
             uid = Shellwords.escape(@id)
+            ruby = RbConfig.ruby
 
             fd = IO.popen(
-              "sudo #{Shellwords.escape(RbConfig.ruby)} " +
+              "sudo #{Shellwords.escape(ruby)} " +
               "-I#{Shellwords.escape(lib_dir)} " +
               "-e \"require 'vmnet_mac'; " +
               "puts VagrantPlugins::Xhyve::Support::VmnetMac.from_uuid('#{uid}')\""
